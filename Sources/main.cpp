@@ -8,6 +8,8 @@ int main(){
     std::vector<Funcionario> funcionarios;
     std::vector<Aluguel> alugueis;
 
+    Menu::menu(clientes,veiculos,funcionarios,alugueis);
+
     
 
 
