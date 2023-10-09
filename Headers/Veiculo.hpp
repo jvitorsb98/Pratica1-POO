@@ -9,7 +9,9 @@ class Aluguel;
 
 class Veiculo{
 
-    std::string identificador;
+    static int numeroDeIdentificadores;
+
+    int  id;
     std::string marca;
     std::string modelo;
     int anoFabricacao;
@@ -17,19 +19,22 @@ class Veiculo{
     std::vector<Aluguel*> listaAlugueis;
 
     public:
+        Veiculo(std::string marca , std::string modelo , int anoFabricacao, float precoPorDia);
+        Veiculo();
 
-        std::string getIdentificador();
+        int getId();
         std::string getMarca();
         std::string getModelo();
         int getAnoFabricacao();
         float getPrecoPorDia();
         std::vector<Aluguel*>* getListaAlugueis();
 
-        void setIdentificador(std::string identificador);
+        void setId(int id);
         void setMarca(std::string marca);
         void setModelo(std::string modelo);
         void setAnoFabricacao(int anoFabricacao);
         void setPrecoPorDia(float precoPorDia);
+        void mostraVeiculo();
 
 };
 

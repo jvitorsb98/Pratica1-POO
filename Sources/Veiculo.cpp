@@ -1,11 +1,29 @@
 #include "../Headers/Veiculo.hpp"
 
-std::string Veiculo::getIdentificador(){
-    return this->identificador;
+int Veiculo::numeroDeIdentificadores=0;
+
+
+Veiculo::Veiculo(std::string marca , std::string modelo , int anoFabricacao, float precoPorDia) : marca(marca) , modelo(modelo) , anoFabricacao(anoFabricacao) , precoPorDia(precoPorDia){
+    Veiculo::numeroDeIdentificadores++;
+    setId(Veiculo::numeroDeIdentificadores);
+}
+Veiculo::Veiculo(){
 }
 
-void Veiculo::setIdentificador(std::string identificador){
-    this->identificador = identificador;
+void Veiculo::mostraVeiculo(){
+    std::cout << "ID : " << getId() << std::endl;
+    std::cout << "Marca : " << getMarca() << std::endl;
+    std::cout << "Modelo : " << getModelo() << std::endl;
+    std::cout << "Ano de Fabricação : " << getAnoFabricacao() << std::endl;
+    std::cout << "Preço por dia : " << getPrecoPorDia() << std::endl;
+}
+
+int Veiculo::getId(){
+    return this->id;
+}
+
+void Veiculo::setId(int id){
+    this->id = id;
 }
 
 std::string Veiculo::getMarca(){

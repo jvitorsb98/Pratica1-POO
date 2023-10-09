@@ -1,5 +1,12 @@
 #include "../Headers/Usuario.hpp"
 
+Usuario::Usuario(std::string nome , std::string cpf , std::string telefone, std::string endereco ): nome(nome) , cpf(cpf) , telefone(telefone) , endereco(endereco){
+
+}
+Usuario::Usuario(){
+
+}
+
 void Usuario::setCpf(std::string cpf){
     this->cpf = cpf;
 }
@@ -30,4 +37,12 @@ std::string Usuario::getEndereco(){
 
 std::string Usuario::getTelefone(){
     return this->telefone;
+}
+
+int Usuario::getId(){
+    return this->id;
+}
+
+void Usuario::setId(int id){
+    this->id = id;
 }
