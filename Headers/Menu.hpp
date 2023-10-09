@@ -55,7 +55,8 @@ class Menu{
         static void listaAluguel(std::vector<Aluguel> &alugueis);
         static void encontraAluguel(std::vector<Aluguel> &alugueis);
         static void excluiAluguel(std::vector<Aluguel> &alugueis);
-        static void modificaAluguel(std::vector<Aluguel> &alugueis);
+        static void modificaAluguel(std::vector<Aluguel> &alugueis,std::vector<Cliente> &clientes,
+        std::vector<Veiculo> &veiculos,std::vector<Funcionario> &funcionarios);
 
 
         static void pause();

@@ -750,7 +750,7 @@ void Menu::menuAluguel(std::vector<Aluguel> &alugueis,std::vector<Cliente> &clie
                 excluiAluguel(alugueis);
                 break;
             case 5:
-                modificaAluguel(alugueis);
+                modificaAluguel(alugueis,clientes,veiculos,funcionarios);
                 break;
         }
 
@@ -913,9 +913,218 @@ void Menu::encontraAluguel(std::vector<Aluguel> &alugueis){
 }
 
 void Menu::excluiAluguel(std::vector<Aluguel> &alugueis){
+    system("clear || cls");
+    int id;
+    std::cout << "ID do Funcionario para exclusão : " << std::endl;
+    std::cin >> id;
+    std::cin.get();
+    bool aluguelExcluido= false;
 
+    for(auto it=alugueis.begin() ; it!=alugueis.end() ; it++){
+        if(it->getId() == id ){
+            alugueis.erase(it);
+            std::cout << "---ALUGUEL EXCLUIDO---" << std::endl;
+            pause();
+            aluguelExcluido = true;
+            break;
+        }
+    }
+    if(aluguelExcluido){
+        std::ofstream inAlugueis;
+        inAlugueis.open("../BancoDeDados/alugueis.txt",std::ios_base::out);
+        if(inAlugueis.is_open()){
+            for(auto it=alugueis.begin() ; it!=alugueis.end() ; it++){
+                inAlugueis << it->getId() << std::endl;
+                inAlugueis << it->getCliente()->getId() << std::endl;
+                inAlugueis << it->getVeiculo()->getId() << std::endl;
+                inAlugueis << it->getFuncionario()->getId() << std::endl;
+                inAlugueis << it->getDataInicio().tm_mday << std::endl;
+                inAlugueis << it->getDataInicio().tm_mon << std::endl;
+                inAlugueis << it->getDataInicio().tm_year << std::endl;
+                inAlugueis << it->getDataTermino().tm_mday << std::endl;
+                inAlugueis << it->getDataTermino().tm_mon << std::endl;
+                inAlugueis << it->getDataTermino().tm_year << std::endl;
+                inAlugueis << it->getDataDevolucao().tm_mday << std::endl;
+                inAlugueis << it->getDataDevolucao().tm_mon << std::endl;
+                inAlugueis << it->getDataDevolucao().tm_year << std::endl;
+                inAlugueis << it->getDesconto() << std::endl;
+                inAlugueis << it->getAdicional() << std::endl;
+            }
+            inAlugueis.close();
+        }
+    }else{
+        std::cout << "Aluguel não encontrado " << std::endl;
+        pause();
+    }
 }
 
-void Menu::modificaAluguel(std::vector<Aluguel> &alugueis){
+void Menu::modificaAluguel(std::vector<Aluguel> &alugueis,std::vector<Cliente> &clientes,
+        std::vector<Veiculo> &veiculos,std::vector<Funcionario> &funcionarios){
+    int escolha;
+    system("clear || cls");
+    int id;
+    std::cout << "ID do aluguel para modificação : " << std::endl;
+    std::cin >> id;
+    std::cin.get();
+    bool aluguelModificado= false;
 
+    for(auto it=alugueis.begin() ; it!=alugueis.end() ; it++){
+        if(it->getId() == id ){
+            do{
+                std::cout << "MENU DE MODIFICAÇÃO - ALUGUEL" << std::endl;
+                std::cout << "[1] CLIENTE " << std::endl;
+                std::cout << "[2] VEICULO " << std::endl;
+                std::cout << "[3] FUNCIONARIO " << std::endl;
+                std::cout << "[4] DATA DE INICIO " << std::endl;
+                std::cout << "[5] DATA DE FIM" << std::endl;
+                std::cout << "[6] DATA DE DEVOLUÇÃO" << std::endl;
+                std::cout << "[7] DESCONTO" << std::endl;
+                std::cout << "[8] ADICIONAL" << std::endl;
+                std::cout << "[0] SAIR" << std::endl;
+
+
+                std::cin >> escolha;
+                std::cin.get();
+
+                int idCliente;
+                int idVeiculo;
+                int idFuncionario;
+                Data dataInicio;
+                Data dataFim;
+                Data dataDevolucao;
+                float desconto;
+                float adicional;
+
+                Cliente* cliente;
+                Veiculo* veiculo;
+                Funcionario* funcionario;
+
+                switch(escolha){
+                    case 1:
+                        system("clear || cls");
+                        std::cout << "ID do novo Cliente : " << std::endl;
+                        std::cin >> idCliente;
+                        for(auto itera=clientes.begin() ; itera!=clientes.end() ; itera++){
+                            if(itera->getId() == idCliente){
+                                cliente = &(*itera);
+                            }
+                        }
+                        it->setCliente(cliente);
+                        aluguelModificado = true;
+                        break;
+                    case 2:
+                        system("clear || cls");
+                        std::cout << "ID do novo Veiculo : " << std::endl;
+                        std::cin >> idVeiculo;
+                        for(auto itera=veiculos.begin() ; itera!=veiculos.end() ; itera++){
+                            if(itera->getId() == idVeiculo){
+                                veiculo = &(*itera);
+                            }
+                        }
+                        it->setVeiculo(veiculo);
+                        aluguelModificado = true;
+                        break;
+                    case 3:
+                        system("clear || cls");
+                        std::cout << "ID do novo Funcionario : " << std::endl;
+                        std::cin >> idFuncionario;
+                        for(auto itera=funcionarios.begin() ; itera!=funcionarios.end() ; itera++){
+                            if(itera->getId() == idFuncionario){
+                                funcionario = &(*itera);
+                            }
+                        }
+                        it->setFuncionario(funcionario);
+                        aluguelModificado = true;
+                        break;
+                    case 4:
+                        system("clear || cls");
+                        std::cout << "Novo dia de inicio : " << std::endl;
+                        std::cout << "Dia : ";
+                        std::cin >> dataInicio.tm_mday;
+                        std::cin.get();
+                        std::cout << "Mês : ";
+                        std::cin >> dataInicio.tm_mon;
+                        std::cin.get();
+                        std::cout << "Ano : ";
+                        std::cin >> dataInicio.tm_year;
+                        std::cin.get();
+                        it->setDataInicio(dataInicio);
+                        aluguelModificado = true;
+                        break;
+                    case 5:
+                        system("clear || cls");
+                        std::cout << "Novo dia de inicio : " << std::endl;
+                        std::cout << "Dia : ";
+                        std::cin >> dataFim.tm_mday;
+                        std::cin.get();
+                        std::cout << "Mês : ";
+                        std::cin >> dataFim.tm_mon;
+                        std::cin.get();
+                        std::cout << "Ano : ";
+                        std::cin >> dataFim.tm_year;
+                        std::cin.get();
+                        it->setDataTermino(dataFim);
+                        aluguelModificado = true;
+                        break;
+                    case 6:
+                        system("clear || cls");
+                        std::cout << "Novo dia de devolução : " << std::endl;
+                        std::cout << "Dia : ";
+                        std::cin >> dataDevolucao.tm_mday;
+                        std::cin.get();
+                        std::cout << "Mês : ";
+                        std::cin >> dataDevolucao.tm_mon;
+                        std::cin.get();
+                        std::cout << "Ano : ";
+                        std::cin >> dataDevolucao.tm_year;
+                        std::cin.get();
+                        it->setDataDevolucao(dataDevolucao);
+                        aluguelModificado = true;
+                        break;
+                    case 7:
+                        system("clear || cls");
+                        std::cout << "Novo valor de desconto : " << std::endl;
+                        std::cin >> desconto;
+                        it->setDesconto(desconto);
+                        aluguelModificado = true;
+                        break;
+                    case 8:
+                        system("clear || cls");
+                        std::cout << "Novo valor de adicional : " << std::endl;
+                        std::cin >> adicional;
+                        it->setAdicional(adicional);
+                        aluguelModificado = true;
+                        break;
+                }
+            }while(escolha !=0);
+        }
+    }
+
+    if(aluguelModificado){
+        std::ofstream inAlugueis;
+        inAlugueis.open("../BancoDeDados/alugueis.txt",std::ios_base::out);
+        if(inAlugueis.is_open()){
+            for(auto it=alugueis.begin() ; it!=alugueis.end() ; it++){
+                inAlugueis << it->getId() << std::endl;
+                inAlugueis << it->getCliente()->getId() << std::endl;
+                inAlugueis << it->getVeiculo()->getId() << std::endl;
+                inAlugueis << it->getFuncionario()->getId() << std::endl;
+                inAlugueis << it->getDataInicio().tm_mday << std::endl;
+                inAlugueis << it->getDataInicio().tm_mon << std::endl;
+                inAlugueis << it->getDataInicio().tm_year << std::endl;
+                inAlugueis << it->getDataTermino().tm_mday << std::endl;
+                inAlugueis << it->getDataTermino().tm_mon << std::endl;
+                inAlugueis << it->getDataTermino().tm_year << std::endl;
+                inAlugueis << it->getDataDevolucao().tm_mday << std::endl;
+                inAlugueis << it->getDataDevolucao().tm_mon << std::endl;
+                inAlugueis << it->getDataDevolucao().tm_year << std::endl;
+                inAlugueis << it->getDesconto() << std::endl;
+                inAlugueis << it->getAdicional() << std::endl;
+            }
+            inAlugueis.close();
+        }
+    }else{
+        std::cout << "Aluguel não encontrado " << std::endl;
+        pause();
+    }
 }

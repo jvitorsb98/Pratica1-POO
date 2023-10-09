@@ -114,7 +114,7 @@ void Aluguel::mostraAluguel(){
     if(getDataDevolucao().tm_mday==0 && getDataDevolucao().tm_mon==0  && getDataDevolucao().tm_year==0 ){
         std::cout << "Sem data cadastrada" << std::endl;
     }else{
-        std::cout << getDataTermino().tm_mday << "/" << getDataTermino().tm_mday << "/" <<  getDataTermino().tm_mday << std::endl;
+        std::cout << getDataTermino().tm_mday << "/" << getDataTermino().tm_mon << "/" <<  getDataTermino().tm_year << std::endl;
     }
     std::cout << "---DESCONTO---" << std:: endl;
     std::cout << "Valor : " << getDesconto() << std::endl;
